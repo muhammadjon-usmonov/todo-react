@@ -27,8 +27,8 @@
 }
 
 .todos__list{
-    width: 600px;
     margin: 0;
+    width: 100%;
     padding: 0;
 }
 
