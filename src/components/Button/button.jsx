@@ -1,4 +1,4 @@
-
+import '../Main/main.css';
 function FooterBtn({footer, active, Completed}) {
 
     return (

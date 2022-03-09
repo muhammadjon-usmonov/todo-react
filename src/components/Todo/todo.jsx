@@ -1,5 +1,7 @@
 import React from "react"
 import "../..//App.css";
+import '../Main/main.css';
+
 
 function Todo({children, todo, handleDelete, handleCheck}){
      return (
