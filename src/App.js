@@ -67,7 +67,7 @@ function App() {
         }}
         />
           
-        <ul>
+        <ul className='todos__list'>
            {
             todos.length > 0 && todos.map((todo)=>(
              <Todo key={todo.id} todo={todo}  handleDelete = {handleDelete}  handleCheck = {handleCheck}>

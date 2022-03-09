@@ -10,7 +10,7 @@ function Todo({children, todo, handleDelete, handleCheck}){
                 onClick = {handleCheck}
                 defaultChecked = {todo.isCompleted} 
             />
-           <span  style={{ textDecoration: todo.isCompleted ? 'Line-through': 'none'}}> {children} </span>
+           <span className="todos__text"  style={{ textDecoration: todo.isCompleted ? 'Line-through': 'none'}}> {children} </span>
             <button className="todos__delete" data-todo-id={todo.id} onClick={handleDelete} >
                  &times; 
             </button>
