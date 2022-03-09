@@ -17,7 +17,7 @@
 }
 
 .todos__input{
-    width: 600px;
+    width: 100%;
     padding: 16px 16px 16px 60px;
     border: none;
     background: rgba(0, 0, 0, 0.003);
