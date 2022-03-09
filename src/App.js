@@ -1,4 +1,6 @@
 import './App.css';
+import '..//src/components/Main/main.css';
+
 import React from 'react';
 import "./components/Todo/todo";
 import Todo from './components/Todo/todo';
