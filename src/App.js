@@ -4,31 +4,24 @@ import '..//src/components/Main/main.css';
 import React from 'react';
 import "./components/Todo/todo";
 import Todo from './components/Todo/todo';
-import Button from './components/Button/button';
-import { fireEvent, waitFor } from '@testing-library/react';
+// import Button from './components/Button/button';
+// import { fireEvent, waitFor } from '@testing-library/react';
 
 
 function App() {
 
-  const [todos, setTodos] = React.useState([
-      {
-        id:0,
-        title:'wake up',
-        isCompleted:false,
-      },
-
-      {
-        id:1,
-        title:'wake up',
-        isCompleted:false,
-      }
-  ])
+  const [todos, setTodos] = React.useState(JSON.parse(window.localStorage.getItem('todos')) || [] )
+  const [type, setType ] = React.useState("all");
+   
 
 
   const handleDelete = (evt)=>{
     const todoId = evt.target.dataset.todoId - 0;
 
     const filteredTodos = todos.filter(todo => todo.id !== todoId)
+
+    window.localStorage.setItem('todos', JSON.stringify(filteredTodos))
+
     setTodos(filteredTodos)
   }
 
@@ -39,8 +32,33 @@ function App() {
       const foundTodo = todos.find((todo)=> todo.id===todoId);
       foundTodo.isCompleted = !foundTodo.isCompleted;
 
+      window.localStorage.setItem('todos', JSON.stringify([...todos]))
+
       setTodos([...todos]);
-  }
+  };
+
+
+  const getTodoByType = (_type, _todos) => {
+    if(_type === "all"){
+      return _todos;
+    }
+
+    if(_type === "completed"){
+      return _todos.filter(t => t.isCompleted);
+
+    }
+
+    if(_type === "uncompleted"){
+      return _todos.filter(t => !t.isCompleted);
+      
+    }
+
+    else{
+      return [];
+    }
+  };
+
+  const count = todos.filter(todo=> ! todo.isCompleted).length
 
   return (
       <main className='main'>
@@ -61,6 +79,7 @@ function App() {
               isCompleted:false,
             };
 
+            window.localStorage.setItem('todos', JSON.stringify([...todos,newTodo]))
             setTodos([...todos,newTodo]);
             evt.target.value = null; 
           }
@@ -69,7 +88,8 @@ function App() {
           
         <ul className='todos__list'>
            {
-            todos.length > 0 && todos.map((todo)=>(
+            todos.length > 0 && 
+            getTodoByType(type, todos).map((todo)=>(
              <Todo key={todo.id} todo={todo}  handleDelete = {handleDelete}  handleCheck = {handleCheck}>
                {todo.title}
              </Todo>
@@ -79,10 +99,17 @@ function App() {
 
           
 
-          <Button>
-               
-          </Button>
+
+          <div className='todos__bottom'>
+          <span className='todos__digit'>{count} items left </span>
+
+            <button className='todos__bottom-btn todos__all' onClick={() => setType('all')}>all</button>
+            <button className='todos__bottom-btn todos__com' onClick={() => setType('completed')}>completed</button>
+            <button className='todos__bottom-btn todos__uncom' onClick={() => setType('uncompleted')}>uncompleted</button>
+          </div>
       </main>
   );
 }
 export default App;
+
+  
